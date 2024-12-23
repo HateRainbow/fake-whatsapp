@@ -9,8 +9,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "#232D364",
+        foreground: "#9FA2A7",
+        "chat-background": "#101D25",
+        "chat-reply": "#00B09C",
       },
     },
   },
