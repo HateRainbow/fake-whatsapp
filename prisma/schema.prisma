@@ -8,6 +8,48 @@ datasource db {
 }
 
 model User {
-  phone_number Int   @unique
-  friends      Int[] @map("friends")
+  userID           String        @id @default(uuid())
+  phoneNumber      String        @unique
+  usernames        String?
+  contacts         Contact[]
+  messagesSent     Message[]     @relation("SentMessages")
+  messagesReceived Message[]     @relation("ReceivedMessages")
+  groups           GroupMember[]
+}
+
+model Contact {
+  contactID   String @id @default(uuid())
+  userID      String
+  phoneNumber String @unique
+  contactName String
+  user        User   @relation(fields: [userID], references: [userID])
+}
+
+model Message {
+  MessageID  String   @id @default(uuid())
+  SenderID   String
+  ReceiverID String
+  content    String
+  timestamp  DateTime @default(now())
+
+  sender   User @relation("SentMessages", fields: [SenderID], references: [userID])
+  receiver User @relation("ReceivedMessages", fields: [ReceiverID], references: [userID])
+}
+
+model Group {
+  groupID     String        @id @default(uuid())
+  groupName   String
+  adminID     String
+  createdDate DateTime      @default(now())
+  members     GroupMember[]
+}
+
+model GroupMember {
+  groupMemberID String @id @default(uuid())
+  groupID       String
+  userID        String
+  role          String
+
+  group Group @relation(fields: [groupID], references: [groupID])
+  user  User  @relation(fields: [userID], references: [userID])
 }
