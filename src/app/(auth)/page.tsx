@@ -11,7 +11,7 @@ export default function Register() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true); // make sure that it runs on client else ssr fails to register
+    setIsClient(true); // to make sure that PhoneInput runs in the client
   }, []);
 
   return (

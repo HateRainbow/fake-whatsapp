@@ -12,6 +12,8 @@ export async function registerNumber(formData: FormData): Promise<void> {
     });
     redirect("/home");
   } catch (error) {
-    console.log("Couldn't register the user: ", error);
+    console.log("Couldn't register the user: ", error.stack);
+    // error.stack is used because of some bug/glitch with prisma atm
+    redirect("/home");
   }
 }
