@@ -10,9 +10,9 @@ export default {
     extend: {
       colors: {
         background: "#232D364",
-        foreground: "#9FA2A7",
-        "chat-background": "#101D25",
-        "chat-reply": "#00B09C",
+        "secondary-light": "#00B09C",
+        "primary-dark": "#101D25",
+        "secondary-dark": "#192832",
       },
     },
   },
