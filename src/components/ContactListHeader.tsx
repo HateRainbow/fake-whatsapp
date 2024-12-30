@@ -1,6 +1,6 @@
 import { EllipsisVertical, MessageSquarePlus } from "lucide-react";
 
-export default function Header() {
+export default function ContactListHeader() {
   return (
     <header>
       <ul className="flex justify-between items-center w-full p-2">

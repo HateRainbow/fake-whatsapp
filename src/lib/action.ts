@@ -1,26 +1,30 @@
 "use server";
-import { cookies } from "next/headers";
 import prisma from "./db";
 
 export async function registerNumber(formData: FormData): Promise<void> {
-  const phone = formData.get("phone") as string;
+  const phone = formData?.get("phone") as string;
+
+  if (!phone) return;
+
   try {
     const user = await prisma.user.findFirst({
       where: { phoneNumber: phone },
     });
 
-    if (!user) {
-      const { phoneNumber } = await prisma.user.create({
-        data: {
-          phoneNumber: phone,
-          usernames: phone,
-        },
-      });
+    if (user) {
+      return;
     }
+
+    await prisma.user.create({
+      data: {
+        phoneNumber: phone,
+        usernames: phone,
+      },
+    });
   } catch (error) {
     // error.stack is used because of some bug/glitch with prisma atm of dev
-    // @ts-ignore
-    console.log("Couldn't register the user: ", error.stack);
+    // @ts-ignore ignore the error from error.stack
+    console.log(error.stack); // Log the error stack
   }
 }
 

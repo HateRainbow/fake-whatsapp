@@ -8,9 +8,8 @@ datasource db {
 }
 
 model User {
-  userID           String        @id @default(uuid())
-  phoneNumber      String        @unique
-  usernames        String?
+  phoneNumber      String        @id @unique
+  usernames        String
   contacts         Contact[]
   messagesSent     Message[]     @relation("SentMessages")
   messagesReceived Message[]     @relation("ReceivedMessages")
@@ -20,29 +19,29 @@ model User {
 model Contact {
   phoneNumber String
   contactName String
-  userID      String
-  user        User   @relation(fields: [userID], references: [userID])
+  userPhone   String // reference the phoneNumber of a user
+  user        User   @relation(fields: [userPhone], references: [phoneNumber])
 
-  @@unique([userID, phoneNumber])
+  @@unique([userPhone, phoneNumber])
 }
 
 model Message {
-  MessageID  String   @id @default(uuid())
-  SenderID   String
-  ReceiverID String
-  content    String
-  timestamp  DateTime @default(now())
+  MessageID     String   @id @default(uuid())
+  SenderPhone   String
+  ReceiverPhone String
+  content       String
+  timestamp     DateTime @default(now())
 
-  sender   User @relation("SentMessages", fields: [SenderID], references: [userID])
-  receiver User @relation("ReceivedMessages", fields: [ReceiverID], references: [userID])
+  sender   User @relation("SentMessages", fields: [SenderPhone], references: [phoneNumber])
+  receiver User @relation("ReceivedMessages", fields: [ReceiverPhone], references: [phoneNumber])
 
-  @@index([ReceiverID, timestamp])
+  @@index([ReceiverPhone, timestamp])
 }
 
 model Group {
   groupID     String        @id @default(uuid())
   groupName   String
-  adminID     String
+  adminPhone  String
   createdDate DateTime      @default(now())
   members     GroupMember[]
 }
@@ -50,9 +49,9 @@ model Group {
 model GroupMember {
   groupMemberID String @id @default(uuid())
   groupID       String
-  userID        String
+  userPhone     String
   role          String
 
   group Group @relation(fields: [groupID], references: [groupID])
-  user  User  @relation(fields: [userID], references: [userID])
+  user  User  @relation(fields: [userPhone], references: [phoneNumber])
 }

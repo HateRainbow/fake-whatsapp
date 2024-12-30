@@ -13,14 +13,13 @@ export default function Register() {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const response = await fetch(`/api/submit`, {
+
+    await fetch("/api/auth", {
       method: "POST",
       body: formData,
     });
 
-    if (response.ok) {
-      redirect("/home");
-    }
+    redirect("/home");
   };
 
   useEffect(() => {
