@@ -11,6 +11,7 @@ export async function getSession() {
 }
 
 export async function createSession(phoneNumber: string): Promise<void> {
+  // create a session for when user logs in
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h forward
   const session = await encrypt(phoneNumber);
   const cookieStore = await cookies();
