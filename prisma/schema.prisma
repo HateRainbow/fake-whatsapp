@@ -18,11 +18,12 @@ model User {
 }
 
 model Contact {
-  contactID   String @id @default(uuid())
-  userID      String
-  phoneNumber String @unique
+  phoneNumber String
   contactName String
+  userID      String
   user        User   @relation(fields: [userID], references: [userID])
+
+  @@unique([userID, phoneNumber])
 }
 
 model Message {
@@ -34,6 +35,8 @@ model Message {
 
   sender   User @relation("SentMessages", fields: [SenderID], references: [userID])
   receiver User @relation("ReceivedMessages", fields: [ReceiverID], references: [userID])
+
+  @@index([ReceiverID, timestamp])
 }
 
 model Group {

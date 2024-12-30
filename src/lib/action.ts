@@ -1,19 +1,38 @@
 "use server";
+import { cookies } from "next/headers";
 import prisma from "./db";
-import { redirect } from "next/navigation";
+
 export async function registerNumber(formData: FormData): Promise<void> {
   const phone = formData.get("phone") as string;
   try {
-    await prisma.user.create({
-      data: {
-        phoneNumber: phone,
-        usernames: phone,
-      },
+    const user = await prisma.user.findFirst({
+      where: { phoneNumber: phone },
     });
-    redirect("/home");
+
+    if (!user) {
+      const { phoneNumber } = await prisma.user.create({
+        data: {
+          phoneNumber: phone,
+          usernames: phone,
+        },
+      });
+    }
   } catch (error) {
+    // error.stack is used because of some bug/glitch with prisma atm of dev
+    // @ts-ignore
     console.log("Couldn't register the user: ", error.stack);
-    // error.stack is used because of some bug/glitch with prisma atm
-    redirect("/home");
   }
 }
+
+export async function addContact(formData: FormData) {
+  const contactPhoneNumber = formData.get("phone") as string;
+}
+
+export async function contactList() {
+  // const friendList = await prisma.user.findMany({
+  //   where: { phoneNumber:  },
+  //   include: { contacts: true },
+  // });
+}
+
+export async function contactListFiltered() {}

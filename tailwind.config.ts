@@ -13,6 +13,7 @@ export default {
         "secondary-light": "#00B09C",
         "primary-dark": "#101D25",
         "secondary-dark": "#202C33",
+        "font-dark": "#202C33",
       },
     },
   },

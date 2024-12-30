@@ -1,14 +1,27 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import dynamic from "next/dynamic";
 import "react-phone-input-2/lib/style.css";
-import { registerNumber } from "@/lib/action";
+import { redirect } from "next/navigation";
 
 const PhoneInput = dynamic(() => import("react-phone-input-2"), { ssr: false });
 
 export default function Register() {
-  const [phone, setPhone] = useState("");
   const [isClient, setIsClient] = useState(false);
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const response = await fetch(`/api/submit`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (response.ok) {
+      redirect("/home");
+    }
+  };
 
   useEffect(() => {
     setIsClient(true); // to make sure that PhoneInput runs in the client
@@ -18,7 +31,8 @@ export default function Register() {
     <div className="flex items-center justify-center h-screen bg-primary-dark">
       <form
         className="flex flex-col bg-white p-6 rounded shadow-md w-full max-w-sm"
-        action={registerNumber}
+        onSubmit={onSubmit}
+        method="POST"
       >
         <h1 className="text-xl font-bold mb-4 text-center">WhatsApp Login</h1>
         {isClient && (
@@ -29,8 +43,6 @@ export default function Register() {
               required: true,
               autoFocus: true,
             }}
-            value={phone}
-            onChange={(phone) => setPhone(phone)}
             isValid={(value, country) => {
               if (value.match(/12345/)) {
                 return "Invalid value: " + value + ", " + country;

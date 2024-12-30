@@ -12,11 +12,14 @@
     "@next/env": "^15.1.2",
     "@prisma/client": "^6.1.0",
     "@prisma/extension-accelerate": "^1.2.1",
+    "@types/node-jose": "^1.1.13",
+    "jose": "^5.9.6",
     "lucide-react": "^0.469.0",
     "next": "15.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-phone-input-2": "^2.15.1",
+    "ts-jose": "^5.9.6",
     "zod": "^3.24.1"
   },
   "devDependencies": {
