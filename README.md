@@ -28,6 +28,10 @@ export async function registerNumber(formData: FormData): Promise<void> {
 }
 ```
 
+### seed
+
+to seed the database you can simply run _npx prisma db seed_ to seed the dummy database
+
 ## About the project
 
 This project is a fake whatsapp clone using prisma and a prisma, prisma postgress using next 15 with react 18 to be able to use a packaged called react-phone-input-2

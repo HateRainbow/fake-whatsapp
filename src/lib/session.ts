@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { decryptCookies, encryptCookies, SessionPayload } from "./cookies";
 import { NextRequest, NextResponse } from "next/server";
+import { loginData } from "./action";
 
 export async function getSession(): Promise<SessionPayload> {
   // check if the user has authenticated
@@ -10,10 +11,10 @@ export async function getSession(): Promise<SessionPayload> {
   return await decryptCookies(session);
 }
 
-export async function createSession(phoneNumber: string): Promise<void> {
+export async function createSession(newUserData: loginData): Promise<void> {
   // create a session for when user logs in
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h forward
-  const session = await encryptCookies(phoneNumber);
+  const session = await encryptCookies(newUserData);
   const cookieStore = await cookies();
 
   cookieStore.set("session", session, {
@@ -35,9 +36,9 @@ export async function updateSession(
     if (!session) {
       return NextResponse.next();
     }
-
     const parsed = await decryptCookies(session);
     parsed.expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h forward
+
     const res = NextResponse.next();
     res.cookies.set({
       name: "session",

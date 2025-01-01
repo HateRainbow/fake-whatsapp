@@ -4,7 +4,7 @@ export default function ContactSearchBar() {
   return (
     <form action="" className="flex items-center p-1 text-gray-600">
       <button type="submit" className="absolute">
-        <Search className="text-sm" />
+        <Search className="text-sm pl-1" />
       </button>
       <input
         type="text"

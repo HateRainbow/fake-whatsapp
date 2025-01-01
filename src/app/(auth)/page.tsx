@@ -1,26 +1,14 @@
 "use client";
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, useActionState } from "react";
 import dynamic from "next/dynamic";
 import "react-phone-input-2/lib/style.css";
-import { redirect } from "next/navigation";
+import { loginUser } from "@/lib/action";
 
 const PhoneInput = dynamic(() => import("react-phone-input-2"), { ssr: false });
 
 export default function Register() {
   const [isClient, setIsClient] = useState(false);
-
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
-
-    await fetch("/api/auth", {
-      method: "POST",
-      body: formData,
-    });
-
-    redirect("/home");
-  };
+  const [state, formAction] = useActionState(loginUser, null);
 
   useEffect(() => {
     setIsClient(true); // to make sure that PhoneInput runs in the client
@@ -30,7 +18,7 @@ export default function Register() {
     <div className="flex items-center justify-center h-screen bg-primary-dark">
       <form
         className="flex flex-col bg-white p-6 rounded shadow-md w-full max-w-sm"
-        onSubmit={onSubmit}
+        action={formAction}
         method="POST"
       >
         <h1 className="text-xl font-bold mb-4 text-center">WhatsApp Login</h1>

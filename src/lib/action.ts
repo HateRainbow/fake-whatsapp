@@ -1,26 +1,42 @@
 "use server";
 import prisma from "./db";
+import { createSession } from "./session";
+import { redirect } from "next/navigation";
 
-export async function registerNumber(formData: FormData): Promise<void> {
-  const phone = formData?.get("phone") as string;
+// function delay(ms: number) {
+//   return new Promise((resolve) => setTimeout(resolve, ms));
+// }
+export type loginData = {
+  phone: string;
+};
 
-  if (!phone) return;
+export async function loginUser(
+  previousState: any,
+  formData: FormData
+): Promise<void> {
+  const data = Object.fromEntries(formData.entries()) as loginData;
+
+  if (!data.phone) {
+    console.log("no formData");
+    return;
+  }
 
   try {
     const user = await prisma.user.findFirst({
-      where: { phoneNumber: phone },
+      where: { phoneNumber: data.phone },
     });
 
-    if (user) {
-      return;
-    }
+    if (!user)
+      await prisma.user.create({
+        data: {
+          phoneNumber: data.phone,
+          usernames: data.phone,
+        },
+      });
 
-    await prisma.user.create({
-      data: {
-        phoneNumber: phone,
-        usernames: phone,
-      },
-    });
+    await createSession(data);
+
+    redirect("/home");
   } catch (error) {
     // error.stack is used because of some bug/glitch with prisma atm of dev
     // @ts-ignore ignore the error from error.stack
@@ -29,7 +45,8 @@ export async function registerNumber(formData: FormData): Promise<void> {
 }
 
 export async function addContact(formData: FormData) {
-  const contactPhoneNumber = formData.get("phone") as string;
+  const searchContact = formData.get("searchParams") as string;
+  let filteredUser;
 }
 
 export async function contactList() {

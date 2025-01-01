@@ -1,5 +1,5 @@
-import prisma from "@/lib/db";
-
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 const users = [
   {
     usernames: "John Doe",
@@ -54,4 +54,6 @@ const createUser = async () => {
   }
 };
 
-createUser();
+createUser()
+  .catch((e) => console.error(e))
+  .finally(() => prisma.$disconnect());

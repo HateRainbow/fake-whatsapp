@@ -18,8 +18,8 @@ export async function encryptCookies(payload: any): Promise<string> {
     .sign(key);
 }
 
-export async function decryptCookies(input: string): Promise<SessionPayload> {
-  const { payload } = await jwtVerify(input, key, {
+export async function decryptCookies(cookie: any): Promise<SessionPayload> {
+  const { payload } = await jwtVerify(cookie, key, {
     algorithms: ["HS256"],
   });
 

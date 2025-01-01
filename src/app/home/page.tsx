@@ -9,7 +9,7 @@ export default function Home() {
         <ContactListHeader />
         <div className="pl-1 p-1">
           <ContactSearchBar />
-          <main>
+          <main className="">
             <ContactList />
           </main>
         </div>
