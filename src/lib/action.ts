@@ -1,11 +1,9 @@
 "use server";
+import { Contact } from "@prisma/client";
 import prisma from "./db";
 import { createSession } from "./session";
 import { redirect } from "next/navigation";
 
-// function delay(ms: number) {
-//   return new Promise((resolve) => setTimeout(resolve, ms));
-// }
 export type loginData = {
   phone: string;
 };
@@ -17,7 +15,7 @@ export async function loginUser(
   const data = Object.fromEntries(formData.entries()) as loginData;
 
   if (!data.phone) {
-    console.log("no formData");
+    console.error("no formData");
     return;
   }
 
@@ -35,13 +33,13 @@ export async function loginUser(
       });
 
     await createSession(data);
-
-    redirect("/home");
   } catch (error) {
     // error.stack is used because of some bug/glitch with prisma atm of dev
     // @ts-ignore ignore the error from error.stack
-    console.log(error.stack); // Log the error stack
+    console.log(error.stack);
   }
+
+  redirect("/home");
 }
 
 export async function addContact(formData: FormData) {
@@ -56,4 +54,4 @@ export async function contactList() {
   // });
 }
 
-export async function contactListFiltered() {}
+export async function contactListFiltered(formData: FormData) {}
