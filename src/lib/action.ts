@@ -47,11 +47,11 @@ export async function addContact(formData: FormData) {
   let filteredUser;
 }
 
-export async function contactList() {
-  // const friendList = await prisma.user.findMany({
-  //   where: { phoneNumber:  },
-  //   include: { contacts: true },
-  // });
-}
+// export async function contactList() {
+// const friendList = await prisma.user.findMany({
+//   where: { phoneNumber:  },
+//   include: { contacts: true },
+// });
+// }
 
 export async function contactListFiltered(formData: FormData) {}
