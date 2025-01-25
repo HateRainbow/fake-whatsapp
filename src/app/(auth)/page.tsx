@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect, FormEvent, useActionState } from "react";
+import { useState, useEffect, useActionState } from "react";
 import dynamic from "next/dynamic";
-import "react-phone-input-2/lib/style.css";
+import "react-phone-input-2/lib/bootstrap.css";
 import { loginUser } from "@/lib/action";
 
 const PhoneInput = dynamic(() => import("react-phone-input-2"), { ssr: false });

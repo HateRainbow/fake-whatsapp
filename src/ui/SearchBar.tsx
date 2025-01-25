@@ -1,6 +1,17 @@
 import { Search } from "lucide-react";
+import { useActionState } from "react";
 
+const initialState = {
+  searchResult: "",
+};
+
+type SearchBarParamProps = {
+  searchAction: (FormData: FormData) => any;
+};
+// { searchAction }: SearchBarParamProps
 export default function SearchBar() {
+  // const [state, formAction] = useActionState(searchAction, initialState);
+
   return (
     <form action="" className="flex items-center p-1 text-gray-600">
       <button type="submit" className="absolute">

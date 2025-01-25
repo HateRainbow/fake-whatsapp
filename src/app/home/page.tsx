@@ -3,6 +3,7 @@ import ChatWindow from "@/components/ChatWindow";
 import SearchBar from "@/ui/SearchBar";
 import clsx from "clsx";
 import {
+  ArrowLeft,
   CircleUserRound,
   EllipsisVertical,
   MessageSquarePlus,
@@ -15,16 +16,23 @@ export default function Home() {
 
   return (
     <div className="flex h-screen flex-row w-full">
-      <div
-        className={clsx({
-          "w-[30%] border-r-0 overflow-y-auto pl-0 min-w-min motion-preset-slide-right motion-duration-1000":
-            isMessagePlusIconClicked,
-          invisible: !isMessagePlusIconClicked,
-        })}
-      >
+      {/* 1 */}
+      <nav className="w-[30%] flex- border-r-0 relative overflow-y-auto pl-0 min-w-min p-2">
+        <ArrowLeft className="py-2 text-xl w-10 h-10 cursor-pointer" />
         <SearchBar />
-      </div>
-      <nav className="w-[30%] invisible border-r-0 overflow-y-auto pl-0 min-w-min  absolute">
+        <main>
+          <ul className="flex items-start flex-col overflow-y-scroll cursor-pointer pt-2 w-[100%]">
+            <li className="w-[100%] py-3 hover:bg-[#202C33] leading-30">
+              <p className="flex items-center gap-3 text-xl text-center align-middle  w-[100%] min-h-8 h-full border-secondary-dark">
+                <CircleUserRound className="bg-[#6A7175] rounded-[50%] w-8 h-8" />
+                Pizza mamma mia
+              </p>
+            </li>
+          </ul>
+        </main>
+      </nav>
+      {/* 2 */}
+      <nav className="w-[30%]  h-screen border-r-0 overflow-y-auto pl-0 min-w-min absolute bg-primary-dark">
         <header>
           <ul className="flex justify-between items-center w-full p-2">
             <li>
@@ -33,9 +41,11 @@ export default function Home() {
             <div className="flex gap-4 text-gray-600">
               <li>
                 <button className="p-2">
-                  <MessageSquarePlus
-                    onClick={() => setIsMessagePlusIconClicked(true)}
-                  />
+                  {/* 
+                  TODO: Jag vill att om man trycker på MessageSquarePlus så kommer det 
+                  att 1 komma och 2 försvinna fast vet ej hur man gör i tailwind
+                  */}
+                  <MessageSquarePlus />
                 </button>
               </li>
               <li>
@@ -50,10 +60,16 @@ export default function Home() {
         <div className="pl-1 p-1">
           <main>
             <ul className="flex items-start flex-col overflow-y-scroll cursor-pointer pt-2 w-[100%]">
-              <li className="w-[100%] hover:bg-[#202C33]">
-                <p className="flex items-center gap-3 text-xl text-center align-middle border w-[100%] min-h-8 h-[100%] border-secondary-dark">
+              <li className="w-[100%] py-3 m-[-1] p-0 ">
+                <p className="flex items-center gap-3 text-xl text-center align-middle border w-[100%] min-h-8 h-full hover:bg-slate-500 border-secondary-dark">
                   <CircleUserRound className="bg-[#6A7175] rounded-[50%] w-8 h-8" />
                   Pizza mamma mia
+                </p>
+              </li>
+              <li className="w-[100%] py-3 m-[-1] p-0">
+                <p className="flex items-center gap-3 text-xl text-center align-middle border border-y-[100%] w-[100%] min-h-8 h-full border-secondary-dark">
+                  <CircleUserRound className="bg-[#6A7175] rounded-[50%] w-8 h-8" />
+                  Checcazz
                 </p>
               </li>
             </ul>
