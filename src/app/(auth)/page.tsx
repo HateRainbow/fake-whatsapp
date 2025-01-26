@@ -16,11 +16,7 @@ export default function Register() {
 
   return (
     <div className="flex items-center justify-center h-screen bg-primary-dark">
-      <form
-        className="flex flex-col bg-white p-6 rounded shadow-md w-full max-w-sm"
-        action={formAction}
-        method="POST"
-      >
+      <form className="flex flex-col bg-white p-6 rounded shadow-md w-full max-w-sm" action={formAction} method="POST">
         <h1 className="text-xl font-bold mb-4 text-center">WhatsApp Login</h1>
         {isClient && (
           <PhoneInput
