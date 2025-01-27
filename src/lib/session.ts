@@ -36,6 +36,7 @@ export async function updateSession(
     if (!session) {
       return NextResponse.next();
     }
+
     const parsed = await decryptCookies(session);
     parsed.expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h forward
 

@@ -10,8 +10,6 @@ type SearchBarParamProps = {
 };
 // { searchAction }: SearchBarParamProps
 export default function SearchBar() {
-  // const [state, formAction] = useActionState(searchAction, initialState);
-
   return (
     <form action="" className="flex items-center p-1 text-gray-600">
       <button type="submit" className="absolute">

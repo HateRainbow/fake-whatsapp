@@ -1,8 +1,9 @@
 "use client";
 import ChatWindow from "@/components/ChatWindow";
+import ContactList from "@/components/ContactList";
 import NewChatPanel from "@/components/NewChatPanel";
 import SearchBar from "@/ui/SearchBar";
-import clsx from "clsx";
+import { User } from "@prisma/client";
 import {
   ArrowLeft,
   CircleUserRound,
@@ -11,9 +12,23 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
+export type correctUser = {
+  phoneNumber: string;
+  usernames?: string;
+};
+const users: correctUser[] = [
+  {
+    phoneNumber: "+14901511275",
+    usernames: undefined,
+  },
+  {
+    phoneNumber: "+13793606472",
+    usernames: "user5523",
+  },
+];
 export default function Home() {
-  // const [isMessagePlusIconClicked, setIsMessagePlusIconClicked] = useState<boolean>(false);
   const [isNewChatPanelOpened, setIsNewChatPanelOpened] = useState(false);
+  const [user, setUser] = useState<string>();
 
   return (
     <div className="flex h-screen flex-row w-full ">
@@ -31,7 +46,7 @@ export default function Home() {
           </ul>
         </div>
       </nav>
-      <nav className="w-[30%]  h-screen border-r-0 overflow-y-auto pl-0 min-w-min absolute bg-primary-dark">
+      <nav className="w-[30%] h-screen border-r-0 overflow-y-auto pl-0 min-w-min absolute bg-primary-dark">
         <header>
           <ul className="flex justify-between items-center w-full p-2">
             <li>
@@ -59,17 +74,7 @@ export default function Home() {
         <SearchBar />
         <div className="pl-1 p-1">
           <div>
-            <ul className="grid overflow-y-scroll cursor-pointer pt-2 w-[100%] text-[#e9edef]">
-              <li className="flex items-center gap-x-4 p-3 hover:bg-slate-500">
-                <CircleUserRound className="bg-[#6A7175] rounded-[50%] w-8 h-8" />
-                <span className="text-xl"> Pizza mamma mia </span>
-              </li>
-
-              <li className="flex items-center gap-x-4 p-3 hover:bg-slate-500">
-                <CircleUserRound className="bg-[#6A7175] rounded-[50%] w-8 h-8" />
-                <span className="text-xl"> Checcazz </span>
-              </li>
-            </ul>
+            <ContactList user={users} setUser={setUser} />
           </div>
         </div>
         <NewChatPanel
@@ -79,7 +84,7 @@ export default function Home() {
       </nav>
 
       <section className="flex-grow overflow-y-auto overflow-x-hidden w-[70%] h-screen bg-black">
-        <ChatWindow />
+        <ChatWindow user={user} />
       </section>
     </div>
   );

@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect, useActionState } from "react";
 import dynamic from "next/dynamic";
 import "react-phone-input-2/lib/bootstrap.css";
@@ -16,7 +17,11 @@ export default function Register() {
 
   return (
     <div className="flex items-center justify-center h-screen bg-primary-dark">
-      <form className="flex flex-col bg-white p-6 rounded shadow-md w-full max-w-sm" action={formAction} method="POST">
+      <form
+        className="flex flex-col bg-white p-6 rounded shadow-md w-full max-w-sm"
+        action={formAction}
+        method="POST"
+      >
         <h1 className="text-xl font-bold mb-4 text-center">WhatsApp Login</h1>
         {isClient && (
           <PhoneInput
@@ -37,6 +42,7 @@ export default function Register() {
             }}
           />
         )}
+
         <button
           type="submit"
           className="mt-4 px-4 py-2 w-[90%] text-sm font-medium text-white bg-green-500 rounded-md hover:bg-green-600 pl-2 ml-4"

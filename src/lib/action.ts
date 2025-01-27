@@ -1,7 +1,7 @@
 "use server";
-import { Contact } from "@prisma/client";
+import { Contact, User } from "@prisma/client";
 import prisma from "./db";
-import { createSession } from "./session";
+import { createSession, getSession } from "./session";
 import { redirect } from "next/navigation";
 
 export type loginData = {
@@ -42,9 +42,28 @@ export async function loginUser(
   redirect("/home");
 }
 
-export async function addContact(formData: FormData) {
-  const searchContact = formData.get("searchParams") as string;
-  let filteredUser;
+export async function addToContactList(formData: FormData): Promise<void> {
+  const contact = formData.get("searchParams") as string;
+  const contactExist = await prisma.user.findFirst({
+    where: { phoneNumber: contact },
+  });
+
+  const userSessionNumber = (await getSession()).phoneNumber;
+
+  if (!contactExist?.phoneNumber) {
+    return;
+  }
+  await prisma.user.update({
+    where: { phoneNumber: userSessionNumber },
+    data: {
+      contacts: {
+        create: {
+          contactName: contactExist.usernames || contactExist.phoneNumber,
+          phoneNumber: contactExist.phoneNumber,
+        },
+      },
+    },
+  });
 }
 
 // export async function contactList() {

@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   phoneNumber      String        @id @unique
-  usernames        String
+  usernames        String?
   contacts         Contact[]
   messagesSent     Message[]     @relation("SentMessages")
   messagesReceived Message[]     @relation("ReceivedMessages")
