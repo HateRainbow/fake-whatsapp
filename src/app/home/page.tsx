@@ -3,7 +3,12 @@ import ChatWindow from "@/components/ChatWindow";
 import NewChatPanel from "@/components/NewChatPanel";
 import SearchBar from "@/ui/SearchBar";
 import clsx from "clsx";
-import { ArrowLeft, CircleUserRound, EllipsisVertical, MessageSquarePlus } from "lucide-react";
+import {
+  ArrowLeft,
+  CircleUserRound,
+  EllipsisVertical,
+  MessageSquarePlus,
+} from "lucide-react";
 import { useState } from "react";
 
 export default function Home() {
@@ -12,7 +17,6 @@ export default function Home() {
 
   return (
     <div className="flex h-screen flex-row w-full ">
-      {/* 1 */}
       <nav className="w-[30%] flex- border-r-0 relative overflow-y-auto pl-0 min-w-min p-2">
         <ArrowLeft className="py-2 text-xl w-10 h-10 cursor-pointer" />
         <SearchBar />
@@ -27,7 +31,6 @@ export default function Home() {
           </ul>
         </div>
       </nav>
-      {/* 2 */}
       <nav className="w-[30%]  h-screen border-r-0 overflow-y-auto pl-0 min-w-min absolute bg-primary-dark">
         <header>
           <ul className="flex justify-between items-center w-full p-2">
@@ -42,10 +45,6 @@ export default function Home() {
                     setIsNewChatPanelOpened(!isNewChatPanelOpened);
                   }}
                 >
-                  {/* 
-                  TODO: Jag vill att om man trycker på MessageSquarePlus så kommer det 
-                  att 1 komma och 2 försvinna fast vet ej hur man gör i tailwind
-                  */}
                   <MessageSquarePlus />
                 </button>
               </li>
@@ -73,7 +72,10 @@ export default function Home() {
             </ul>
           </div>
         </div>
-        <NewChatPanel isOpened={isNewChatPanelOpened} setIsOpened={setIsNewChatPanelOpened} />
+        <NewChatPanel
+          isOpened={isNewChatPanelOpened}
+          setIsOpened={setIsNewChatPanelOpened}
+        />
       </nav>
 
       <section className="flex-grow overflow-y-auto overflow-x-hidden w-[70%] h-screen bg-black">
