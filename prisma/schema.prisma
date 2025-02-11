@@ -10,26 +10,25 @@ datasource db {
 model User {
   phoneNumber      String        @id @unique
   usernames        String?
-  contacts         Contact[]
+  contacts         Contact[]     @relation("UserContacts")
   messagesSent     Message[]     @relation("SentMessages")
   messagesReceived Message[]     @relation("ReceivedMessages")
   groups           GroupMember[]
 }
 
 model Contact {
-  phoneNumber String
-  contactName String
-  userPhone   String // reference the phoneNumber of a user
-  user        User   @relation(fields: [userPhone], references: [phoneNumber])
+  phoneNumber   String
+  contactName   String
+  contactNumber String // reference the phoneNumber of a user
+  user          User   @relation("UserContacts", fields: [contactNumber], references: [phoneNumber])
 
-  @@unique([userPhone, phoneNumber])
+  @@unique([contactNumber, phoneNumber])
 }
 
 model Message {
   MessageID     String   @id @default(uuid())
   SenderPhone   String
   ReceiverPhone String
-  content       String
   timestamp     DateTime @default(now())
 
   sender   User @relation("SentMessages", fields: [SenderPhone], references: [phoneNumber])
@@ -49,9 +48,9 @@ model Group {
 model GroupMember {
   groupMemberID String @id @default(uuid())
   groupID       String
-  userPhone     String
+  contactNumber String
   role          String
 
   group Group @relation(fields: [groupID], references: [groupID])
-  user  User  @relation(fields: [userPhone], references: [phoneNumber])
+  user  User  @relation(fields: [contactNumber], references: [phoneNumber])
 }

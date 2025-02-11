@@ -53,6 +53,7 @@ export async function addToContactList(formData: FormData): Promise<void> {
   if (!contactExist?.phoneNumber) {
     return;
   }
+
   await prisma.user.update({
     where: { phoneNumber: userSessionNumber },
     data: {
@@ -66,11 +67,14 @@ export async function addToContactList(formData: FormData): Promise<void> {
   });
 }
 
-// export async function contactList() {
-// const friendList = await prisma.user.findMany({
-//   where: { phoneNumber:  },
-//   include: { contacts: true },
-// });
-// }
+export async function contactList(): Promise<User[]> {
+  const session = await getSession();
+  const sessionNumber = session.phoneNumber;
+
+  return await prisma.user.findMany({
+    where: { phoneNumber: sessionNumber },
+    include: { contacts: true },
+  });
+}
 
 export async function contactListFiltered(formData: FormData) {}

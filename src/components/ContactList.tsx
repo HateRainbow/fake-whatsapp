@@ -1,22 +1,25 @@
 "use client";
 
-import { correctUser } from "@/app/home/page";
-import { User } from "@prisma/client";
 import { CircleUserRound } from "lucide-react";
-import React from "react";
+import { contactList } from "@/lib/action";
+import { User } from "@prisma/client";
 
 type ContactListProp = {
-  user: correctUser[];
-  setUser: React.Dispatch<React.SetStateAction<any>>;
+  users: User[];
+  setUser: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
-export default function ContactList({ user, setUser }: ContactListProp) {
+// useEffect(async () => {
+//   return () => {};
+// }, []);
+
+export default function ContactList({ users, setUser }: ContactListProp) {
   return (
     <div>
-      {user.map((user) => (
+      {users.map((user) => (
         <ul
           key={user.phoneNumber}
-          className="flex items-start flex-col overflow-y-scroll cursor-pointer pt-2 w-[100%] text-[#e9edef]"
+          className="flex items-start flex-col overflow-y-scroll cursor-pointer pt-2 w-[100%] space-y-0 text-[#e9edef]"
         >
           <li
             className="w-[100%] hover:bg-slate-500"

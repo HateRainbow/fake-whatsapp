@@ -1,9 +1,15 @@
 import ChatWindowHeader from "./ChatWindowHeader";
 
-export default function ChatWindow({ user }: any) {
+type ChatWindowProps = {
+  selectedUser?: string;
+};
+
+const socket = io("http://localhost:3000");
+
+export default function ChatWindow({ selectedUser }: ChatWindowProps) {
   return (
     <div className="flex w-[100%] z-[-1]">
-      <ChatWindowHeader username={user} />
+      <ChatWindowHeader username={selectedUser} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import ChatWindow from "@/components/ChatWindow";
 import ContactList from "@/components/ContactList";
-import NewChatPanel from "@/components/NewChatPanel";
+import AddNewContactPanel from "@/components/NewChatPanel";
 import SearchBar from "@/ui/SearchBar";
 import { User } from "@prisma/client";
 import {
@@ -12,23 +12,20 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-export type correctUser = {
-  phoneNumber: string;
-  usernames?: string;
-};
-const users: correctUser[] = [
-  {
-    phoneNumber: "+14901511275",
-    usernames: undefined,
-  },
-  {
-    phoneNumber: "+13793606472",
-    usernames: "user5523",
-  },
-];
 export default function Home() {
-  const [isNewChatPanelOpened, setIsNewChatPanelOpened] = useState(false);
-  const [user, setUser] = useState<string>();
+  const [AddNewContactPanelOpen, setAddNewContactPanelOpen] = useState(false);
+  const [user, setUser] = useState<string | undefined>();
+
+  const users: User[] = [
+    {
+      phoneNumber: "+1234567890",
+      usernames: "JohnDoe",
+    },
+    {
+      phoneNumber: "+9876543210",
+      usernames: "JaneSmith",
+    },
+  ];
 
   return (
     <div className="flex h-screen flex-row w-full ">
@@ -50,14 +47,14 @@ export default function Home() {
         <header>
           <ul className="flex justify-between items-center w-full p-2">
             <li>
-              <h1 className="text-xl font-semibold">Chats</h1>
+              <h1 className="text-xl text-gray-400 font-semibold">Chats</h1>
             </li>
             <div className="flex gap-4 text-gray-600">
               <li>
                 <button
                   className="p-2"
                   onClick={() => {
-                    setIsNewChatPanelOpened(!isNewChatPanelOpened);
+                    setAddNewContactPanelOpen(!AddNewContactPanelOpen);
                   }}
                 >
                   <MessageSquarePlus />
@@ -74,17 +71,17 @@ export default function Home() {
         <SearchBar />
         <div className="pl-1 p-1">
           <div>
-            <ContactList user={users} setUser={setUser} />
+            <ContactList users={users} setUser={setUser} />
           </div>
         </div>
-        <NewChatPanel
-          isOpened={isNewChatPanelOpened}
-          setIsOpened={setIsNewChatPanelOpened}
+        <AddNewContactPanel
+          isOpened={AddNewContactPanelOpen}
+          setIsOpened={setAddNewContactPanelOpen}
         />
       </nav>
 
       <section className="flex-grow overflow-y-auto overflow-x-hidden w-[70%] h-screen bg-black">
-        <ChatWindow user={user} />
+        <ChatWindow selectedUser={user} />
       </section>
     </div>
   );
